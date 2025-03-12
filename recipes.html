@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f4f4f4;
+      }
+
+      /* Recipe Page Styles */
+      .recipe-page {
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .recipe-page h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      .recipes-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+        gap: 2rem; /* Space between cards */
+        margin-top: 2rem;
+      }
+
+      .recipe-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .recipe-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .recipe-card img {
+        width: 100%;
+        height: 200px; /* Image height */
+        object-fit: cover;
+      }
+
+      .recipe-card h3 {
+        font-size: 1.25rem; /* Title size */
+        margin: 1rem 0;
+        color: #2c3e50;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal-content {
+        background-color: #fff;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        padding: 2rem;
+        position: relative;
+        overflow-y: auto;
+        max-height: 90vh;
+      }
+
+      .modal-content img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .modal-content h2 {
+        font-size: 2rem;
+        margin: 1.5rem 0 1rem;
+        color: #2c3e50;
+      }
+
+      .modal-content h3 {
+        font-size: 1.5rem;
+        margin: 1.5rem 0 1rem;
+        color: #2c3e50;
+      }
+
+      .modal-content ul,
+      .modal-content ol {
+        text-align: left;
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+      }
+
+      .modal-content ul li,
+      .modal-content ol li {
+        margin: 0.5rem 0;
+      }
+
+      .modal-content button {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        background-color: #d54215;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      .modal-content button:hover {
+        background-color: #b33712;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: #333;
+        cursor: pointer;
+      }
+
+      /* Rating Styles */
+      .rating {
+        display: flex;
+        justify-content: center;
+        gap: 0.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .rating .star {
+        font-size: 1.25rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .rating .star.active {
+        color: #ffcc00;
+      }
+      .share-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .share-buttons a {
+        color: #fff;
+        background-color: #d54215;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+
+      .share-buttons a:hover {
+        background-color: #b33712;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1024px) {
+        .recipes-grid {
+          grid-template-columns: repeat(
+            3,
+            1fr
+          ); /* 3 cards per row on tablets */
+        }
+      }
+
+      @media (max-width: 768px) {
+        .recipes-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .recipes-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div id="navbar"></div>
+    </nav>
+    <div class="recipe-page">
+      <h1>Recipes</h1>
+      <h2 style="color: #d54215">Breakfast</h2>
+      <div class="recipes-grid">
+        <div class="recipe-card" data-id="1">
+          <img
+            src="recipes/11691116_Crescent-Sausage-Egg-Roll-Ups_Yolanda-Gutierrez_4x3-090ac6402394482eb99a88b0171ca094.webp"
+            alt="Spaghetti Carbonara"
+          />
+          <h3>Crescent Sausage Egg Roll Ups</h3>
+        </div>
+        <div class="recipe-card" data-id="2">
+          <img
+            src="recipes/11691600_Blueberry-Baked-Oats_TheDailyGourmet_4x3-5553c5d31d084675bcf0c534edc28bf9.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Blueberry Baked Oats</h3>
+        </div>
+        <div class="recipe-card" data-id="3">
+          <img
+            src="recipes/8262550-carrot-bread-i-Timothy-Fisher-4x3-1-b06b3f752b9b46e3aed73e0cb87b321d.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>carrot-bread</h3>
+        </div>
+        <div class="recipe-card" data-id="4">
+          <img
+            src="recipes/11687812_Bacon-Pancakes_LaDonna-Langwell_4x3-b94109a2263842e79fc84d41433c0e8b.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Bacon pancakes</h3>
+        </div>
+      </div>
+      <h2 style="color: #d54215">Lunch</h2>
+      <div class="recipes-grid">
+        <div class="recipe-card" data-id="5">
+          <img
+            src="popular recipes/1001600_Oven-Roasted-Asparagus-4x3-1-7cf936f30c114b48a3d0f457cecb1699.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Oven-Roasted-Asparagus</h3>
+        </div>
+        <div class="recipe-card" data-id="6">
+          <img
+            src="popular recipes/8349113-garlic-chicken-fried-chicken-Tacita-Lady_T-Beautiful-1x1-1-434fa1b59efc48db9a0a351322e3f45a.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Garlic fried chicken</h3>
+        </div>
+        <div class="recipe-card" data-id="7">
+          <img
+            src="popular recipes/45957-ChickenMakhaniIndianButterChicken-mfs-4X3-0037-7aa9a555bf3943baae20c5c3b0921375.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Chicken Makhani Indian</h3>
+        </div>
+        <div class="recipe-card" data-id="8">
+          <img
+            src="popular recipes/45957-ChickenMakhaniIndianButterChicken-mfs-4X3-0037-7aa9a555bf3943baae20c5c3b0921375.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Chicken Tikka Masala</h3>
+        </div>
+      </div>
+      <h2 style="color: #d54215">Dinner</h2>
+      <div class="recipes-grid">
+        <div class="recipe-card" data-id="9">
+          <img
+            src="recipes/ALR-8789582-air-fryer-honey-mustard-salmon-VAT-4x3-1-0c1c795b90b240f8ab66bd9fd0efe5b7.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>air fryer honey mustard salmon</h3>
+        </div>
+        <div class="recipe-card" data-id="10">
+          <img
+            src="recipes/264005_Kimchi-Corned-Beef-4x3-96741484af044441843143a6d0f907d1.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Kimchi corned beef</h3>
+        </div>
+        <div class="recipe-card" data-id="11">
+          <img
+            src="recipes/11692407-Creole-Pot-Pie-PeytonBeckwith-AR_QB_CreolePotpie61-4x3-622a2f4f04f3454290aaf1534ea984e3.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Creole pot pie</h3>
+        </div>
+        <div class="recipe-card" data-id="12">
+          <img
+            src="recipes/11692257_Crockpot-Chicken-Teriyaki-Rice_Peyton-Beckwith_4x3-408ea62179464a20a5317c677ca25369.webp"
+            alt="Chicken Tikka Masala"
+          />
+          <h3>Crockpot chicken teriyaki rice</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img src="" alt="Recipe Image" />
+        <h2>Recipe Title</h2>
+        <div class="rating" data-rating="0">
+          <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+        </div>
+        <h3>Ingredients</h3>
+        <ul class="ingredients"></ul>
+        <h3>Instructions</h3>
+        <ol class="instructions"></ol>
+        <button id="add-to-my-recipes">Add to My Recipes</button>
+        <div class="share-buttons">
+          <a href="#" id="whatsapp-share" target="_blank"
+            ><i class="fab fa-whatsapp"></i> WhatsApp</a
+          >
+          <a href="#" id="facebook-share" target="_blank"
+            ><i class="fab fa-facebook"></i> Facebook</a
+          >
+          <a href="#" id="instagram-share" target="_blank"
+            ><i class="fab fa-instagram"></i> Instagram</a
+          >
+        </div>
+      </div>
+    </div>
+    <div id="footer"></div>
+    <script>
+      let recipes = [
+        {
+          id: 1,
+          title: "Spaghetti Carbonara",
+          image:
+            "popular recipes/1001600_Oven-Roasted-Asparagus-4x3-1-7cf936f30c114b48a3d0f457cecb1699.webp",
+          ingredients: [
+            "Spaghetti",
+            "Eggs",
+            "Parmesan Cheese",
+            "Pancetta",
+            "Black Pepper",
+          ],
+          instructions: [
+            "Cook spaghetti according to package instructions.",
+            "Fry pancetta until crispy.",
+            "Whisk eggs and Parmesan cheese in a bowl.",
+            "Combine cooked spaghetti with pancetta and egg mixture.",
+            "Serve immediately with black pepper.",
+          ],
+        },
+        {
+          id: 2,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/11691600_Blueberry-Baked-Oats_TheDailyGourmet_4x3-5553c5d31d084675bcf0c534edc28bf9.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 3,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/8262550-carrot-bread-i-Timothy-Fisher-4x3-1-b06b3f752b9b46e3aed73e0cb87b321d.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 4,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/11687812_Bacon-Pancakes_LaDonna-Langwell_4x3-b94109a2263842e79fc84d41433c0e8b.webp",
+          ingredients: [
+            "6 slices bacon",
+            "1 cup pancake mix",
+            "i egg",
+            "maple syrup",
+            "Cream",
+          ],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 5,
+          title: "Chicken Tikka Masala",
+          image:
+            "popular recipes/1001600_Oven-Roasted-Asparagus-4x3-1-7cf936f30c114b48a3d0f457cecb1699.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 6,
+          title: "Chicken Tikka Masala",
+          image:
+            "popular recipes/8349113-garlic-chicken-fried-chicken-Tacita-Lady_T-Beautiful-1x1-1-434fa1b59efc48db9a0a351322e3f45a.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 7,
+          title: "Chicken Tikka Masala",
+          image:
+            "popular recipes/45957-ChickenMakhaniIndianButterChicken-mfs-4X3-0037-7aa9a555bf3943baae20c5c3b0921375.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 8,
+          title: "Chicken Tikka Masala",
+          image:
+            "popular recipes/45957-ChickenMakhaniIndianButterChicken-mfs-4X3-0037-7aa9a555bf3943baae20c5c3b0921375.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 9,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/ALR-8789582-air-fryer-honey-mustard-salmon-VAT-4x3-1-0c1c795b90b240f8ab66bd9fd0efe5b7.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 10,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/264005_Kimchi-Corned-Beef-4x3-96741484af044441843143a6d0f907d1.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 11,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/11692407-Creole-Pot-Pie-PeytonBeckwith-AR_QB_CreolePotpie61-4x3-622a2f4f04f3454290aaf1534ea984e3.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+        {
+          id: 12,
+          title: "Chicken Tikka Masala",
+          image:
+            "recipes/11692257_Crockpot-Chicken-Teriyaki-Rice_Peyton-Beckwith_4x3-408ea62179464a20a5317c677ca25369.webp",
+          ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
+          instructions: [
+            "Marinate chicken in yogurt and spices.",
+            "Grill or bake the chicken.",
+            "Prepare tomato sauce with spices and cream.",
+            "Combine chicken with sauce and simmer.",
+            "Serve with rice or naan.",
+          ],
+        },
+      ];
+
+      // Modal functionality
+      const modal = document.querySelector(".modal");
+      const closeModal = document.querySelector(".close-modal");
+      const modalContent = document.querySelector(".modal-content");
+      const addToMyRecipesButton = document.getElementById("add-to-my-recipes");
+
+      document.querySelectorAll(".recipe-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const recipeId = parseInt(card.getAttribute("data-id"));
+          const recipe = recipes.find((r) => r.id === recipeId);
+
+          // Populate modal with recipe data
+          modalContent.querySelector("img").src = recipe.image;
+          modalContent.querySelector("h2").textContent = recipe.title;
+          modalContent.querySelector(".ingredients").innerHTML =
+            recipe.ingredients.map((ing) => `<li>${ing}</li>`).join("");
+          modalContent.querySelector(".instructions").innerHTML =
+            recipe.instructions.map((step) => `<li>${step}</li>`).join("");
+
+          // Show modal
+          modal.style.display = "flex";
+        });
+      });
+
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+      // Load the navbar and footer using jQuery
+      $(document).ready(function () {
+        // Load the navbar
+        $("#navbar").load("navbar.html", function () {
+          // This callback runs after the navbar is loaded
+          initializeNavbar();
+        });
+
+        // Load the footer
+        $("#footer").load("footer.html");
+      });
+    
+        
+        function initializeNavbar() {
+          
+          const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    
+          if (loggedInUser) {
+            
+            $('#auth-link').html(`
+              <span class="navbar-link" style="color: #d54215;">${loggedInUser}</span>
+              <a href="#" class="navbar-link" id="logout-link">Logout</a>
+            `);
+    
+            
+            $('#logout-link').on('click', function () {
+              localStorage.removeItem('loggedInUser'); 
+              window.location.href = 'index.html'; 
+            });
+          }
+    
+          // Navbar toggle functionality
+          const navbarToggle = document.querySelector(".navbar-toggle");
+          const navbarLinks = document.querySelector(".navbar-links");
+          
+          navbarToggle.addEventListener("click", () => {
+            navbarLinks.classList.toggle("active");
+          });
+        }
+      // Set up share links
+      const shareUrl = encodeURIComponent(window.location.href);
+      const shareText = encodeURIComponent(
+        `Check out this recipe: ${recipe.title}`
+      );
+      document.getElementById(
+        "whatsapp-share"
+      ).href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
+      document.getElementById(
+        "facebook-share"
+      ).href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+      document.getElementById(
+        "instagram-share"
+      ).href = `https://www.instagram.com/?url=${shareUrl}`;
+
+      //adding recipes
+      addToMyRecipesButton.addEventListener("click", () => {
+        const recipeTitle = modalContent.querySelector("h2").textContent;
+        const recipeImage = modalContent.querySelector("img").src; 
+        const recipeIngredients = Array.from(
+          modalContent.querySelectorAll(".ingredients li")
+        ).map((li) => li.textContent);
+        const recipeInstructions = Array.from(
+          modalContent.querySelectorAll(".instructions li")
+        ).map((li) => li.textContent);
+
+        const recipe = {
+          title: recipeTitle,
+          image: recipeImage,
+          ingredients: recipeIngredients,
+          instructions: recipeInstructions,
+        };
+
+        console.log("Saving recipe:", recipe);
+
+        const myRecipes = JSON.parse(localStorage.getItem("myRecipes")) || [];
+
+        // Check if the recipe is already saved
+        const isRecipeSaved = myRecipes.some((r) => r.title === recipe.title);
+        if (!isRecipeSaved) {
+          myRecipes.push(recipe);
+          localStorage.setItem("myRecipes", JSON.stringify(myRecipes));
+          alert(`${recipe.title} has been added to My Recipes!`);
+        } else {
+          alert(`${recipe.title} is already in My Recipes!`);
+        }
+      });
+
+      // Rating functionality
+      const rating = document.querySelector(".rating");
+      const stars = rating.querySelectorAll(".star");
+      let currentRating = parseInt(rating.getAttribute("data-rating"));
+
+      stars.forEach((star) => {
+        star.addEventListener("click", () => {
+          const value = parseInt(star.getAttribute("data-value"));
+
+          
+          rating.setAttribute("data-rating", value);
+
+          
+          stars.forEach((s) => {
+            if (parseInt(s.getAttribute("data-value")) <= value) {
+              s.classList.add("active");
+            } else {
+              s.classList.remove("active");
+            }
+          });
+
+          console.log(`Rating updated to ${value} stars`);
+        });
+      });
+      
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>

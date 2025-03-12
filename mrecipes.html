@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f4f4f4;
+      }
+
+      .my-recipes-page {
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .my-recipes-page h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      .recipes-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+        gap: 2rem; /* Space between cards */
+        margin-top: 2rem;
+      }
+
+      .recipe-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .recipe-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .recipe-card img {
+        width: 100%;
+        height: 200px; 
+        object-fit: cover;
+      }
+
+      .recipe-card h3 {
+        font-size: 1.25rem; 
+        margin: 1rem 0;
+        color: #2c3e50;
+      }
+
+      .remove-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: #ff4d4d; 
+        border: none;
+        color: #fff;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .remove-button:hover {
+        background-color: #cc0000; 
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal-content {
+        background-color: #fff;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        padding: 2rem;
+        position: relative;
+        overflow-y: auto;
+        max-height: 90vh;
+      }
+
+      .modal-content img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .modal-content h2 {
+        font-size: 2rem;
+        margin: 1.5rem 0 1rem;
+        color: #2c3e50;
+      }
+
+      .modal-content h3 {
+        font-size: 1.5rem;
+        margin: 1.5rem 0 1rem;
+        color: #2c3e50;
+      }
+
+      .modal-content ul,
+      .modal-content ol {
+        text-align: left;
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+      }
+
+      .modal-content ul li,
+      .modal-content ol li {
+        margin: 0.5rem 0;
+      }
+
+      .modal-content button {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        background-color: #d54215;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      .modal-content button:hover {
+        background-color: #b33712;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: #333;
+        cursor: pointer;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1024px) {
+        .recipes-grid {
+          grid-template-columns: repeat(
+            2,
+            1fr
+          );
+          .my-recipes-page {
+            padding: 6rem 2rem 2rem;
+        text-align: center;
+      } /* 2 cards per row on tablets */
+        }
+      }
+
+      @media (max-width: 768px) {
+        .recipes-grid {
+          grid-template-columns: 1fr; /* 1 card per row on mobile */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div id="navbar"></div>
+    </nav>
+    <div class="my-recipes-page">
+      <h1>My Recipes</h1>
+      <div class="recipes-grid" id="recipes-grid">
+        <!-- Recipes will be dynamically added here -->
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img src="" alt="Recipe Image" />
+        <h2>Recipe Title</h2>
+        <div class="rating" data-rating="0">
+          <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+        </div>
+        <h3>Ingredients</h3>
+        <ul class="ingredients"></ul>
+        <h3>Instructions</h3>
+        <ol class="instructions"></ol>
+      </div>
+    </div>
+    <div id="footer"></div>
+    <script>
+      
+       // Load the navbar and footer using jQuery
+      $(document).ready(function () {
+        // Load the navbar
+        $("#navbar").load("navbar.html", function () {
+         
+          initializeNavbar();
+        });
+
+        // Load the footer
+        $("#footer").load("footer.html");
+      });
+    
+        
+        function initializeNavbar() {
+          
+          const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    
+          if (loggedInUser) {
+           
+            $('#auth-link').html(`
+              <span class="navbar-link" style="color: #d54215;">${loggedInUser}</span>
+              <a href="#" class="navbar-link" id="logout-link">Logout</a>
+            `);
+    
+            
+            $('#logout-link').on('click', function () {
+              localStorage.removeItem('loggedInUser'); 
+              window.location.href = 'index.html'; 
+            });
+          }
+    
+          // Navbar toggle functionality
+          const navbarToggle = document.querySelector(".navbar-toggle");
+          const navbarLinks = document.querySelector(".navbar-links");
+          
+          navbarToggle.addEventListener("click", () => {
+            navbarLinks.classList.toggle("active");
+          });
+        }
+      // Retrieve saved recipes from localStorage
+      const myRecipes = JSON.parse(localStorage.getItem("myRecipes")) || [];
+      const recipesGrid = document.getElementById("recipes-grid");
+      const modal = document.querySelector(".modal");
+      const closeModal = document.querySelector(".close-modal");
+      const modalContent = document.querySelector(".modal-content");
+
+      // Function to display recipes
+      function displayRecipes() {
+        recipesGrid.innerHTML = ""; // Clear the grid
+        myRecipes.forEach((recipe, index) => {
+          const recipeCard = document.createElement("div");
+          recipeCard.classList.add("recipe-card");
+
+          recipeCard.innerHTML = `
+      <img src="${recipe.image}" alt="${recipe.title}" />
+      <h3>${recipe.title}</h3>
+      <button class="remove-button" onclick="removeRecipe(${index})">&times;</button>
+    `;
+
+          // Add click event to open modal
+          recipeCard.addEventListener("click", () => {
+            modalContent.querySelector("img").src = recipe.image;
+            modalContent.querySelector("h2").textContent = recipe.title;
+            modalContent.querySelector(".ingredients").innerHTML =
+              recipe.ingredients.map((ing) => `<li>${ing}</li>`).join("");
+            modalContent.querySelector(".instructions").innerHTML =
+              recipe.instructions.map((step) => `<li>${step}</li>`).join("");
+            modal.style.display = "flex";
+          });
+
+          recipesGrid.appendChild(recipeCard);
+        });
+      }
+
+      // Function to remove a recipe
+      function removeRecipe(index) {
+        myRecipes.splice(index, 1); 
+        localStorage.setItem("myRecipes", JSON.stringify(myRecipes)); 
+        displayRecipes(); 
+      }
+
+      
+      
+
+      // Close modal
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      // Close modal when clicking outside
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+      displayRecipes();
+    </script>
+  </body>
+</html>

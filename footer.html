@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>footer</title>
+    <style>
+        footer {
+          background-color: hsl(0, 0%, 100%); 
+          color: black; 
+          padding: 2rem 1rem;
+          text-align: center;
+          margin-top:20px ;
+          
+        }
+        
+        .footer-content {
+          display: flex;
+          justify-content: space-between;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1rem;
+        }
+        
+        .footer-column {
+          flex: 1;
+          margin-right: 2rem;
+          text-align: left;
+        }
+        
+        .footer-column:last-child {
+          margin-right: 0;
+        }
+        
+        .footer-column h3 {
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+          color: black; /* White heading */
+        }
+        
+        .footer-column p {
+          font-size: 0.9rem;
+          line-height: 1.5;
+          color: #000000; /* Light gray text */
+        }
+        
+        .footer-column ul {
+          list-style: none;
+          padding: 0;
+        }
+        
+        .footer-column ul li {
+          margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
+          color: #000000; /* White links */
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+          color: #d54215; /* Orange on hover */
+          text-decoration: underline; /* Underline on hover */
+        }
+        
+        
+        .social-icons {
+          margin-top: 2rem;
+        }
+        
+        .social-icons a {
+          color: #d54215; 
+          font-size: 1.5rem;
+          margin: 0 0.5rem;
+          transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+          color: #d54215; 
+        }
+        
+        
+        .copyright {
+          margin-top: 1.5rem;
+          font-size: 0.9rem;
+          color: #000000; 
+        }
+        
+        
+        @media (max-width: 768px) {
+          .footer-content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+        
+          .footer-column {
+            margin-right: 0;
+            margin-bottom: 1.5rem;
+            text-align: center;
+          }
+        
+          .footer-column:last-child {
+            margin-bottom: 0;
+          }
+        }</style>
+</head>
+<body>
+    <footer>
+        <div class="footer-content">
+          <!-- Left Column: Tasty Tales Description -->
+          <div class="footer-column">
+            <h3>Tasty Tales</h3>
+            <p>
+              Since 1995, Tasty Tales has been the ultimate food resource for the home cook, with daily kitchen tips, fun cooking videos, and, oh yeah, over 33,000 recipes.
+            </p>
+          </div>
+      
+          <!-- Middle Column: More from Tasty Tales -->
+          <div class="footer-column">
+            <h3>More from Tasty Tales</h3>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Newsletters</a></li>
+              <li><a href="#">Subscription FAQs</a></li>
+              <li><a href="#">Gift Guides</a></li>
+            </ul>
+          </div>
+      
+          
+          <div class="footer-column">
+            <h3>Recipes</h3>
+            <ul>
+              <li><a href="#">All Recipes</a></li>
+              <li><a href="#">By Category</a></li>
+              <li><a href="#">Collections</a></li>
+            </ul>
+          </div>
+        </div>
+      
+        
+        <div class="social-icons">
+          <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+      
+        
+        <div class="copyright">
+          &copy; 2023 Tasty Tales. All rights reserved.
+        </div>
+      </footer>
+</body>
+</html>
