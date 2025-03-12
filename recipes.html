@@ -367,7 +367,7 @@
         },
         {
           id: 2,
-          title: "Chicken Tikka Masala",
+          title: "Blueberry-Baked-Oats",
           image:
             "recipes/11691600_Blueberry-Baked-Oats_TheDailyGourmet_4x3-5553c5d31d084675bcf0c534edc28bf9.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -381,7 +381,7 @@
         },
         {
           id: 3,
-          title: "Chicken Tikka Masala",
+          title: "carrot-bread",
           image:
             "recipes/8262550-carrot-bread-i-Timothy-Fisher-4x3-1-b06b3f752b9b46e3aed73e0cb87b321d.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -395,7 +395,7 @@
         },
         {
           id: 4,
-          title: "Chicken Tikka Masala",
+          title: "Bacon-Pancakes",
           image:
             "recipes/11687812_Bacon-Pancakes_LaDonna-Langwell_4x3-b94109a2263842e79fc84d41433c0e8b.webp",
           ingredients: [
@@ -415,7 +415,7 @@
         },
         {
           id: 5,
-          title: "Chicken Tikka Masala",
+          title: "Oven-Roasted-Asparagus",
           image:
             "popular recipes/1001600_Oven-Roasted-Asparagus-4x3-1-7cf936f30c114b48a3d0f457cecb1699.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -429,7 +429,7 @@
         },
         {
           id: 6,
-          title: "Chicken Tikka Masala",
+          title: "garlic-chicken-fried",
           image:
             "popular recipes/8349113-garlic-chicken-fried-chicken-Tacita-Lady_T-Beautiful-1x1-1-434fa1b59efc48db9a0a351322e3f45a.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -457,7 +457,7 @@
         },
         {
           id: 8,
-          title: "Chicken Tikka Masala",
+          title: "Chicken Makhani Indian",
           image:
             "popular recipes/45957-ChickenMakhaniIndianButterChicken-mfs-4X3-0037-7aa9a555bf3943baae20c5c3b0921375.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -471,7 +471,7 @@
         },
         {
           id: 9,
-          title: "Chicken Tikka Masala",
+          title: "Honey mustard salmon",
           image:
             "recipes/ALR-8789582-air-fryer-honey-mustard-salmon-VAT-4x3-1-0c1c795b90b240f8ab66bd9fd0efe5b7.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -485,7 +485,7 @@
         },
         {
           id: 10,
-          title: "Chicken Tikka Masala",
+          title: "Kimchi-Corned-Beef",
           image:
             "recipes/264005_Kimchi-Corned-Beef-4x3-96741484af044441843143a6d0f907d1.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -499,7 +499,7 @@
         },
         {
           id: 11,
-          title: "Chicken Tikka Masala",
+          title: "Creole Pot Pie",
           image:
             "recipes/11692407-Creole-Pot-Pie-PeytonBeckwith-AR_QB_CreolePotpie61-4x3-622a2f4f04f3454290aaf1534ea984e3.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -513,7 +513,7 @@
         },
         {
           id: 12,
-          title: "Chicken Tikka Masala",
+          title: "Crockpot Chicken Teriyaki Rice",
           image:
             "recipes/11692257_Crockpot-Chicken-Teriyaki-Rice_Peyton-Beckwith_4x3-408ea62179464a20a5317c677ca25369.webp",
           ingredients: ["Chicken", "Yogurt", "Tomato Sauce", "Spices", "Cream"],
@@ -593,20 +593,20 @@
             navbarLinks.classList.toggle("active");
           });
         }
-      // Set up share links
-      const shareUrl = encodeURIComponent(window.location.href);
-      const shareText = encodeURIComponent(
-        `Check out this recipe: ${recipe.title}`
-      );
-      document.getElementById(
-        "whatsapp-share"
-      ).href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
-      document.getElementById(
-        "facebook-share"
-      ).href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
-      document.getElementById(
-        "instagram-share"
-      ).href = `https://www.instagram.com/?url=${shareUrl}`;
+      // // Set up share links
+      // const shareUrl = encodeURIComponent(window.location.href);
+      // const shareText = encodeURIComponent(
+      //   `Check out this recipe: ${recipe.title}`
+      // );
+      // document.getElementById(
+      //   "whatsapp-share"
+      // ).href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
+      // document.getElementById(
+      //   "facebook-share"
+      // ).href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+      // document.getElementById(
+      //   "instagram-share"
+      // ).href = `https://www.instagram.com/?url=${shareUrl}`;
 
       //adding recipes
       addToMyRecipesButton.addEventListener("click", () => {
